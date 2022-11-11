@@ -4,14 +4,10 @@ import usersMock from './usersMock';
 import WithCreate from './WithAxiosCreate';
 import WithoutCreate from './WithoutAxiosCreate';
 
-describe('jest.createMockFromModule tests', () => {
-  beforeAll(() => {
-    jest.createMockFromModule('axios');
-  });
-
+describe('jest.spyOn tests', () => {
   describe('withoutAxiosCreate', () => {
     test('renders correctly', async () => {
-      axios.get = jest.fn(async () => ({ data: usersMock }));
+      jest.spyOn(axios, 'get').mockResolvedValue({ data: usersMock });
 
       render(<WithoutCreate />);
       const customerEmail = await screen.findByText(/zebirita@email.com/i);
@@ -22,11 +18,12 @@ describe('jest.createMockFromModule tests', () => {
     });
   });
 
-  describe('withAxiosCreate', () => {
-    test('renders correctly', async () => {
-      axios.create = jest.fn(() => ({
+  describe.skip('withAxiosCreate', () => {
+    test("doesn't work because axios.create is in a closure", async () => {
+      axios.create();
+      jest.spyOn(axios, 'create').mockImplementation({
         get: () => Promise.resolve({ data: usersMock }),
-      }));
+      });
 
       render(<WithCreate />);
       const customerEmail = await screen.findByText(/zebirita@email.com/i);
