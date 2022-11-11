@@ -39,6 +39,7 @@
   "devDependencies": {
     "axios-mock-adapter": "^1.21.2",
     "jest-mock-axios": "^4.7.0-beta",
-    "jest-mock-server": "^0.1.0"
+    "jest-mock-server": "^0.1.0",
+    "msw": "^0.48.1"
   }
 }
